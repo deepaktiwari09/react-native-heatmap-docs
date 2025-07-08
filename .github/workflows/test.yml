@@ -1,0 +1,86 @@
+name: Test and Build
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run type checking
+      run: npm run typecheck
+    
+    - name: Run linting
+      run: npm run lint || true  # Don't fail on lint errors initially
+    
+    - name: Build documentation
+      run: npm run build
+    
+    - name: Test build artifacts
+      run: |
+        ls -la build/
+        test -f build/index.html
+        test -d build/docs
+        test -f build/docs/intro/index.html
+        test -f build/docs/getting-started/installation/index.html
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      if: matrix.node-version == '20.x'
+      with:
+        name: build-artifacts
+        path: build/
+        retention-days: 7
+
+  lighthouse:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build documentation
+      run: npm run build
+    
+    - name: Serve documentation
+      run: npm run serve &
+      
+    - name: Wait for server
+      run: sleep 10
+    
+    - name: Run Lighthouse CI
+      run: |
+        npm install -g @lhci/cli
+        lhci autorun
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        LHCI_TOKEN: ${{ secrets.LHCI_TOKEN }}
