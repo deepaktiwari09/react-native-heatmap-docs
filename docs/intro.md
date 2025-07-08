@@ -2,46 +2,108 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# React Native Heatmap
 
-Let's discover **Docusaurus in less than 5 minutes**.
+A modern, highly customizable React Native heatmap component library inspired by GitHub's contribution calendar. Perfect for visualizing activity data, progress tracking, and creating beautiful data representations in your React Native applications.
 
-## Getting Started
+<div className="heatmap-demo"></div>
 
-Get started by **creating a new site**.
+## ✨ Key Features
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+### 🎨 **Multiple Color Schemes**
+- **10+ Built-in Schemes**: GitHub, GitLab, Bitbucket, Heat, Cool, Purple, Accessible, Sunset, Neon, and more
+- **Custom Color Support**: Create your own color schemes with ease
+- **Dynamic Theming**: Seamless light/dark mode integration
 
-### What you'll need
+### 📊 **Flexible Layout System**
+- **Time-Based Layouts**: Daily, Weekly, Monthly, Yearly, Custom Range, Timeline Scroll, Real-Time
+- **Card Layout System**: Flexible card-based layout with configurable sections
+- **Traditional Layouts**: Calendar, Grid, and Compact arrangements
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+### 🎬 **Advanced Features**
+- **Smooth Animations**: Entry animations with fade, scale, slide effects and stagger timing
+- **Gesture Support**: Pan, zoom, swipe with react-native-gesture-handler integration
+- **Interactive Tooltips**: Customizable tooltips with auto-positioning
+- **Touch Handlers**: onPress, onLongPress, onPressIn, onPressOut, onDoublePress
+- **Haptic Feedback**: Native haptic feedback integration
 
-## Generate a new site
+### 🔧 **Developer Experience**
+- **TypeScript First**: Complete type safety with comprehensive interfaces
+- **React Native Optimized**: Built specifically for mobile performance
+- **Extensive Documentation**: Comprehensive guides and examples
+- **Easy Integration**: Works with Expo, React Native CLI, and popular state management solutions
 
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
+## 📦 Installation
 
 ```bash
-npm init docusaurus@latest my-website classic
+# Using npm
+npm install @dt-workspace/react-native-heatmap react-native-svg
+
+# Using yarn
+yarn add @dt-workspace/react-native-heatmap react-native-svg
+
+# Using pnpm
+pnpm add @dt-workspace/react-native-heatmap react-native-svg
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+## 🚀 Quick Start
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+```tsx
+import React from 'react';
+import { View } from 'react-native';
+import { Heatmap } from '@dt-workspace/react-native-heatmap';
 
-## Start your site
+const data = [
+  { date: '2024-01-01', value: 3 },
+  { date: '2024-01-02', value: 7 },
+  { date: '2024-01-03', value: 1 },
+  { date: '2024-01-04', value: 9 },
+  { date: '2024-01-05', value: 2 },
+];
 
-Run the development server:
+const App = () => {
+  return (
+    <View style={{ padding: 20 }}>
+      <Heatmap
+        data={data}
+        startDate={new Date('2024-01-01')}
+        endDate={new Date('2024-12-31')}
+        colorScheme="github"
+        showTooltip={true}
+        animated={true}
+      />
+    </View>
+  );
+};
 
-```bash
-cd my-website
-npm run start
+export default App;
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+## 🎯 Use Cases
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+Perfect for building:
+- **GitHub-style contribution calendars**
+- **Fitness activity trackers**
+- **Sales performance dashboards**
+- **Project timeline visualizations**
+- **Team productivity metrics**
+- **IoT sensor data displays**
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+## 🔗 Quick Links
+
+- [**Installation Guide**](./getting-started/installation) - Complete setup instructions
+- [**API Reference**](./api/heatmap-component) - Component props and methods
+- [**Layout Guides**](./layouts/time-based/daily-layout) - All available layouts
+- [**Examples**](./examples/github-contribution-calendar) - Real-world implementations
+
+## 💡 What's New in v1.2.0
+
+- **7 New Time-Based Layouts** for comprehensive time visualization
+- **CardLayout Component** with flexible section configuration
+- **Enhanced Theming System** with light/dark mode support
+- **Improved Performance** with better memory management
+- **Extended Documentation** with interactive examples
+
+---
+
+Ready to get started? Head over to the [**Installation Guide**](./getting-started/installation) to begin building amazing heatmaps in your React Native app!

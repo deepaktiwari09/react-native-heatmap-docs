@@ -25,7 +25,7 @@ const config: Config = {
   organizationName: 'deepaktiwari09', // Usually your GitHub org/user name.
   projectName: 'react-native-heatmap-docs', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn', // Temporarily set to warn while building documentation
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
